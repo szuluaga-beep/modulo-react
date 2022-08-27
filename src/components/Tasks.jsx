@@ -35,7 +35,7 @@ export default function Tasks() {
       <h1 className="text-primary text-center">Tasks</h1>
       <hr />
       <div className="row">
-        <div className="col-8 col-md-8 col-sm-12">
+        <div className=" col-md-8 col-sm-12">
           <h4 className="text-center">Lista de tareas</h4>
           {size(tasks) === 0 ? (
             <h4 className="text-center text-danger">No hay tareas</h4>
@@ -63,7 +63,7 @@ export default function Tasks() {
             </ul>
           )}
         </div>
-        <div className="col-4 col-md-4 col-sm-12">
+        <div className="col-md-4 col-sm-12">
           <h4>Formulario</h4>
           <form onSubmit={addTask}>
             <input
