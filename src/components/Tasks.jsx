@@ -32,7 +32,7 @@ export default function Tasks() {
 
   return (
     <div className="container mt-5">
-      <h1 className="text-primary text-center">Tasks</h1>
+      <h1 className="text-primary text-center">Tareas</h1>
       <hr />
       <div className="row">
         <div className=" col-md-8 col-sm-12">
@@ -64,7 +64,7 @@ export default function Tasks() {
           )}
         </div>
         <div className="col-md-4 col-sm-12">
-          <h4>Formulario</h4>
+          <h4>Agregar Tareas</h4>
           <form onSubmit={addTask}>
             <input
               type="input"
