@@ -21,8 +21,14 @@ export default function App() {
     }
 
     setTasks([...tasks,newTask])
-    console.log(tasks)
+    // console.log(newTask)
     setTask("")
+  }
+
+  const deleteTask = (id) => {
+    // console.log(id)
+    const filteredTask = tasks.filter(task => task.id !== id)
+    setTasks(filteredTask)
   }
   return (
     <div className="container mt-5">
@@ -37,8 +43,18 @@ export default function App() {
               tasks.map(task => (
                 <li className="list-group-item" key={task.id}>
                   <span className="lead">{task.name}</span>
-                  <button className="btn btn-primary btn-sm float-end ">Eliminar</button>
-                  <button className="btn btn-danger btn-sm float-end mx-2">Editar</button>
+                  <button
+                    className="btn btn-primary btn-sm float-end "
+                    onClick={() => {
+                      deleteTask(task.id)
+                    }}
+                  >Eliminar
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm float-end mx-2"
+                  >
+                    Editar
+                  </button>
                 </li>
               ))
               }
