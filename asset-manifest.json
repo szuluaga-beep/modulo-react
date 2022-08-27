@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/modulo-react/static/css/main.1a3b30b8.css",
+    "main.js": "/modulo-react/static/js/main.f83cc28b.js",
+    "index.html": "/modulo-react/index.html",
+    "main.1a3b30b8.css.map": "/modulo-react/static/css/main.1a3b30b8.css.map",
+    "main.f83cc28b.js.map": "/modulo-react/static/js/main.f83cc28b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1a3b30b8.css",
+    "static/js/main.f83cc28b.js"
+  ]
+}
