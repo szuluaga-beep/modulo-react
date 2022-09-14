@@ -2,23 +2,24 @@ import React, { useState, useEffect } from "react";
 import { isEmpty, size } from "lodash";
 import { nanoid } from "nanoid";
 
-import { getCollection } from "../actions/actions";
+import { addDocument, getCollection } from "../actions/actions";
 
 export default function Tasks() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-  (async () => {
+    (async () => {
       const result = await getCollection("tasks");
-      setTasks(result.data)
-    })();
-  }, [])
-  
 
-  const addTask = (e) => {
+      result.statusResponse && setTasks(result.data);
+    })();
+  }, []);
+
+  const addTask = async (e) => {
     e.preventDefault();
 
     if (isEmpty(task)) {
@@ -26,12 +27,13 @@ export default function Tasks() {
       return;
     }
 
-    const newTask = {
-      id: nanoid(10),
-      name: task,
-    };
+    const result = await addDocument("tasks", { name: task });
+    if (!result.statusResponse) {
+      setError(result.error);
+      return;
+    }
 
-    setTasks([...tasks, newTask]);
+    setTasks([...tasks, { id: result.data.id, name: task }]);
     // console.log(newTask)
     setTask("");
   };
