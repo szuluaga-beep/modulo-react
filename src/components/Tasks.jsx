@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { isEmpty, size } from "lodash";
 import { nanoid } from "nanoid";
 
-import { addDocument, getCollection } from "../actions/actions";
+import { addDocument, getCollection, updateDocument } from "../actions/actions";
 
 export default function Tasks() {
   const [task, setTask] = useState("");
@@ -38,13 +38,20 @@ export default function Tasks() {
     setTask("");
   };
 
-  const saveTask = (e) => {
+  const saveTask = async(e) => {
     e.preventDefault();
 
     if (isEmpty(task)) {
       alert("Task Empty");
       return;
     }
+
+    const result = await updateDocument("tasks", id, { name: task })
+    if (!result.statusResponse) {
+      setError(result.error)
+      return
+    }
+
     const editedTask = tasks.map((item) =>
       item.id === id ? { id, name: task } : item
     );
@@ -53,6 +60,7 @@ export default function Tasks() {
     setTask("");
     setId("");
   };
+  
   const deleteTask = (id) => {
     // console.log(id)
     const filteredTask = tasks.filter((task) => task.id !== id);
