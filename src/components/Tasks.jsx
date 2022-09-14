@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { isEmpty, size } from "lodash";
-import { nanoid } from "nanoid";
 
-import { addDocument, getCollection, updateDocument } from "../actions/actions";
+import './style.css'
+import { addDocument, deleteDocument, getCollection, updateDocument } from "../actions/actions";
 
 export default function Tasks() {
   const [task, setTask] = useState("");
@@ -60,9 +60,15 @@ export default function Tasks() {
     setTask("");
     setId("");
   };
-  
-  const deleteTask = (id) => {
-    // console.log(id)
+
+  const deleteTask = async(id) => {
+    const result = await deleteDocument("tasks", id)
+
+    if (!result.statusResponse) {
+      setError(result.error)
+      return
+    }
+
     const filteredTask = tasks.filter((task) => task.id !== id);
     setTasks(filteredTask);
   };
@@ -114,13 +120,14 @@ export default function Tasks() {
         <div className="col-md-4 col-sm-12">
           <h4>{editMode ? "Modificar tarea" : "Agregar Tareas"}</h4>
           <form onSubmit={editMode ? saveTask : addTask}>
-            <input
+            <textarea
               type="input"
               placeholder="Ingrese tarea..."
               className="form-control"
               onChange={(text) => {
                 setTask(text.target.value);
               }}
+              className="input-task"
               value={task}
             />
             <button
