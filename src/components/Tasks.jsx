@@ -123,11 +123,10 @@ export default function Tasks() {
             <textarea
               type="input"
               placeholder="Ingrese tarea..."
-              className="form-control"
+              className="form-control input-task"
               onChange={(text) => {
                 setTask(text.target.value);
               }}
-              className="input-task"
               value={task}
             />
             <button
