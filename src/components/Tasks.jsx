@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { isEmpty, size } from "lodash";
 import { nanoid } from "nanoid";
+
+import { getCollection } from "../actions/actions";
 
 export default function Tasks() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
+
+  useEffect(() => {
+  (async () => {
+      const result = await getCollection("tasks");
+     
+    })();
+  }, [])
+  
 
   const addTask = (e) => {
     e.preventDefault();
