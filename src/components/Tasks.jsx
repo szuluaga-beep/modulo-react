@@ -13,7 +13,7 @@ export default function Tasks() {
   useEffect(() => {
   (async () => {
       const result = await getCollection("tasks");
-     
+      setTasks(result.data)
     })();
   }, [])
   
