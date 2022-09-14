@@ -5,6 +5,8 @@ import { nanoid } from "nanoid";
 export default function Tasks() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [id, setId] = useState("");
 
   const addTask = (e) => {
     e.preventDefault();
@@ -24,10 +26,31 @@ export default function Tasks() {
     setTask("");
   };
 
+  const saveTask = (e) => {
+    e.preventDefault();
+
+    if (isEmpty(task)) {
+      alert("Task Empty");
+      return;
+    }
+    const editedTask = tasks.map((item) =>
+      item.id === id ? { id, name: task } : item
+    );
+    setTasks(editedTask);
+    setEditMode(false);
+    setTask("");
+    setId("");
+  };
   const deleteTask = (id) => {
     // console.log(id)
     const filteredTask = tasks.filter((task) => task.id !== id);
     setTasks(filteredTask);
+  };
+
+  const editTask = (theTask) => {
+    setTask(theTask.name);
+    setEditMode(true);
+    setId(theTask.id);
   };
 
   return (
@@ -54,7 +77,12 @@ export default function Tasks() {
                     >
                       Eliminar
                     </button>
-                    <button className="btn btn-danger btn-sm float-end mx-2">
+                    <button
+                      className="btn btn-danger btn-sm float-end mx-2"
+                      onClick={() => {
+                        editTask(task);
+                      }}
+                    >
                       Editar
                     </button>
                   </li>
@@ -64,8 +92,8 @@ export default function Tasks() {
           )}
         </div>
         <div className="col-md-4 col-sm-12">
-          <h4>Agregar Tareas</h4>
-          <form onSubmit={addTask}>
+          <h4>{editMode ? "Modificar tarea" : "Agregar Tareas"}</h4>
+          <form onSubmit={editMode ? saveTask : addTask}>
             <input
               type="input"
               placeholder="Ingrese tarea..."
@@ -75,8 +103,15 @@ export default function Tasks() {
               }}
               value={task}
             />
-            <button className="btn btn-dark w-100 mt-2" type="submit">
-              Agregar Tarea
+            <button
+              className={
+                editMode
+                  ? "btn btn-warning w-100 mt-2"
+                  : "btn btn-dark w-100 mt-2"
+              }
+              type="submit"
+            >
+              {editMode ? "Guardar Tarea" : "Agregar Tarea"}
             </button>
           </form>
         </div>
