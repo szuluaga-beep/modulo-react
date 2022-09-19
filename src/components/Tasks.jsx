@@ -19,11 +19,22 @@ export default function Tasks() {
     })();
   }, []);
 
+  const validForm = () => {
+    let isValid = true;
+    setError(null);
+
+    if (isEmpty(task)) {
+      setError("Debes ingresar una tarea.");
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
   const addTask = async (e) => {
     e.preventDefault();
 
-    if (isEmpty(task)) {
-      alert("Task Empty");
+    if (!validForm()) {
       return;
     }
 
@@ -120,6 +131,7 @@ export default function Tasks() {
         <div className="col-md-4 col-sm-12">
           <h4>{editMode ? "Modificar tarea" : "Agregar Tareas"}</h4>
           <form onSubmit={editMode ? saveTask : addTask}>
+            {error && <span className="text-danger">{error}</span>}
             <textarea
               type="input"
               placeholder="Ingrese tarea..."
@@ -129,6 +141,7 @@ export default function Tasks() {
               }}
               value={task}
             />
+
             <button
               className={
                 editMode
