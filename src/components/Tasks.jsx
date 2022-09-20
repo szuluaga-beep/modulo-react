@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { isEmpty, size } from "lodash";
 
-import './style.css'
-import { addDocument, deleteDocument, getCollection, updateDocument } from "../actions/actions";
+import "./style.css";
+import {
+  addDocument,
+  deleteDocument,
+  getCollection,
+  updateDocument,
+} from "../actions/actions";
 
 export default function Tasks() {
   const [task, setTask] = useState("");
@@ -49,7 +54,7 @@ export default function Tasks() {
     setTask("");
   };
 
-  const saveTask = async(e) => {
+  const saveTask = async (e) => {
     e.preventDefault();
 
     if (isEmpty(task)) {
@@ -57,10 +62,10 @@ export default function Tasks() {
       return;
     }
 
-    const result = await updateDocument("tasks", id, { name: task })
+    const result = await updateDocument("tasks", id, { name: task });
     if (!result.statusResponse) {
-      setError(result.error)
-      return
+      setError(result.error);
+      return;
     }
 
     const editedTask = tasks.map((item) =>
@@ -72,12 +77,12 @@ export default function Tasks() {
     setId("");
   };
 
-  const deleteTask = async(id) => {
-    const result = await deleteDocument("tasks", id)
+  const deleteTask = async (id) => {
+    const result = await deleteDocument("tasks", id);
 
     if (!result.statusResponse) {
-      setError(result.error)
-      return
+      setError(result.error);
+      return;
     }
 
     const filteredTask = tasks.filter((task) => task.id !== id);
